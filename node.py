@@ -52,10 +52,10 @@ def newBlock():
 @botc.route('/register')
 def registerUser():
 	if request.remote_addr in known_nodes:
-		return jsonify(registered = "already"), 200
+		return jsonify(registered = "already")
 	known_nodes.append(request.remote_addr)
 	if request.remote_addr in known_nodes:
-		return jsonify(registered = "ok"), 200
+		return jsonify(registered = "ok")
 
 @botc.route('/nodes')
 def getNodes():
