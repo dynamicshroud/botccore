@@ -40,13 +40,15 @@ def announceBlockchain():
 
 @botc.route('/new', methods=['POST'])
 def newBlock():
-	txndata = binascii.unhexlify(bytes(request.form["txndata"], "utf-8"))
-
-	if bc.make_block(txndata):
-		return jsonify(status = "ok")
-	else:
+	if request.remote_addr not in known_nodes:
 		return jsonify(status = "notok")
-
+	else:
+		txndata = binascii.unhexlify(bytes(request.form["txndata"], "utf-8"))
+		if bc.make_block(txndata):
+			return jsonify(status = "ok")
+		else:
+			return jsonify(status = "notok")
+		
 @botc.route('/register')
 def registerUser():
 	if request.remote_addr in known_nodes:
